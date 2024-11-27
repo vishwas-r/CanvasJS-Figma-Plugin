@@ -1,0 +1,19 @@
+{
+  "name": "CanvasJS Charts",
+  "id": "1443465314582546592",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "documentAccess": "dynamic-page",
+  "editorType": [
+    "figma",
+    "figjam"
+  ],
+  "ui": "ui.html",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://*.canvasjs.com"
+    ]
+  }
+}

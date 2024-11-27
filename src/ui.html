@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CanvasJS Chart Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        #chartContainer {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: height 0.5s ease;
+            text-align: center;
+            padding: 2px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>CanvasJS Charts</h2>
+    
+    
+    <label for="chartOptions">Chart Options (JSON):</label>
+    <textarea id="chartOptions" placeholder='{"title":{"text":"Chart Title"},"data":[{"type":"column","dataPoints":[{"label":"Data 1","y":10},{"label":"Data 2","y":15}]}]}'></textarea> 
+    <label for="frameName">Frame Name (optional):</label>
+    <input type="text" id="frameName" placeholder="Enter frame name" />
+    <div id="chartContainer">Chart Renders Here</div>
+    <button id="renderChart">Add Chart</button>
+
+    <script>
+        document.getElementById('renderChart').addEventListener('click', function() {
+            try {
+                var chartContainer = document.getElementById('chartContainer');
+                chartContainer.style.height = "360px";
+                
+                setTimeout(() => {
+                  var options = JSON.parse(document.getElementById('chartOptions').value);
+                  var frameName = document.getElementById('frameName').value;
+                  var chart = new CanvasJS.Chart("chartContainer", options);
+                  
+                  chart.render();
+                  var chartWidth = chart.get("width");
+                  var chartHeight = chart.get("height");
+                  var base64Image = chart.canvas.toDataURL();
+                  parent.postMessage({ pluginMessage: { type: 'chart', base64Image, frameName, chartWidth, chartHeight } }, '*'); // Send frame name with base64Image
+                }, 100);
+            } catch (error) {
+                alert("Invalid JSON format. Please check your chart options.");
+            }
+        });
+    </script>
+</body>
+</html>

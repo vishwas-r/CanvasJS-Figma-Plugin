@@ -9,7 +9,7 @@ Easily add CanvasJS charts to your Figma designs! This plugin lets you render ch
 ## Installation
 - Clone this repository or download the ZIP file.
 - Open Figma and go to **Plugins > Development > Import Plugin from Manifest**.
-- Select the manifest.json file from this repository.
+- Select the manifest.json file from src folder of this repository.
 
 ## How to Use
 1. **Prepare Your Chart Options**
